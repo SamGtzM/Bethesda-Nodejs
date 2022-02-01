@@ -14,7 +14,6 @@ CREATE TABLE tabla_usuario (
     nombre_completo varchar(255),
     correo_electronico varchar(255),
     telefono varchar(255),
-    image varchar(255),
     usuario varchar(255), 
     pass varchar(255),
     usuario_alta varchar(255),
