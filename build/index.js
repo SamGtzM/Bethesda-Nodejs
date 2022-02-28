@@ -1,9 +1,7 @@
-"use strict";
+const http = require('http');
 
-var http = require('http');
+const app = require('./app');
 
-var app = require('./app');
-
-var port = process.env.PORT || 3000;
-var server = http.createServer(app);
+const port = process.env.PORT || 3000;
+const server = http.createServer(app);
 server.listen(port);

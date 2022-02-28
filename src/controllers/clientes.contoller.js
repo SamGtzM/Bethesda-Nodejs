@@ -2,11 +2,10 @@ const db = require('../connection/database');
 
 export const createClient = async (req, res) => {
   await db.query(
-    'INSERT INTO tabla_clientes (nombre_completo, telefono, usuario_alta, fecha_alta) VALUES (?, ?, ?, ?)',
+    'INSERT INTO tabla_clientes (nombre_completo, telefono, usuario_alta) VALUES (?, ?, ?)',
     [req.body.nombre_completo,
       req.body.telefono,
-      req.body.usuario_alta,
-      req.body.fecha_alta],
+      req.body.usuario_alta],
     (err, rows, fields) => {
       if (!err) {
         res.status(200).json(rows);
@@ -39,11 +38,10 @@ export const getClientsById = async (req, res) => {
 
 export const updateClientsById = async (req, res) => {
   await db.query(
-    'UPDATE tabla_clientes SET nombre_completo = ?, telefono = ?, usuario_alta = ?, fecha_alta = ? WHERE id_cliente = ?',
+    'UPDATE tabla_clientes SET nombre_completo = ?, telefono = ?, usuario_alta = ? WHERE id_cliente = ?',
     [req.body.nombre_completo,
       req.body.telefono,
       req.body.usuario_alta,
-      req.body.fecha_alta,
       req.params.clientId],
 
     (err, rows, fields) => {

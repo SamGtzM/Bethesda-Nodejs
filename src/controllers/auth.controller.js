@@ -4,11 +4,11 @@ const db = require('../connection/database');
 const config = require('../config');
 
 export const getUsers = async (req, res) => {
-  await db.query('SELECT * FROM tabla_usuario ORDER BY id_usuario DESC', (err, rows, fields) => {
+  await db.query('SELECT * FROM tabla_usuario INNER JOIN tabla_accesos ON tabla_usuario.id_acceso = tabla_accesos.id_acceso ORDER BY id_usuario DESC; ', (err, rows, fields) => {
     if (!err) {
       res.status(200).json(rows);
     } else {
-      console.log(err, fields);
+      res.status(404).json('Se ha producido un problema al cargar los usuarios', fields);
     }
   });
 };
@@ -18,7 +18,7 @@ export const getUsersById = async (req, res) => {
     if (!err) {
       res.status(200).json(rows);
     } else {
-      console.log(err, fields);
+      res.status(404).json('Se ha producido un problema al cargar el usuario', fields);
     }
   });
 };
@@ -41,7 +41,7 @@ export const updateUsersById = async (req, res) => {
       if (!err) {
         res.status(200).json(rows);
       } else {
-        console.log(err, fields);
+        res.status(404).json('Se ha producido un problema al ingresar los datos', err, fields);
       }
     },
   );
@@ -52,7 +52,7 @@ export const deleteUsersById = async (req, res) => {
     if (!err) {
       res.status(204).json(rows);
     } else {
-      console.log(err, fields);
+      res.json('Se ha producido un problema al eliminar el dato', err, fields);
     }
   });
 };
@@ -91,13 +91,13 @@ export const singupUser = async (req, res) => {
           const num = Number(rows[0].numero_empleado);
           const num2 = Number(req.body.numero_empleado);
           if (num === num2) {
-            console.log('numero de empleado', rows[0].numero_empleado, 'ya registrado');
+            res.json('Numero de empleado ya registrado');
           } else if (rows[0].correo_electronico === req.body.correo_electronico) {
-            console.log('correo', rows[0].correo_electronico, 'ya regsitrado');
+            res.json('Correo ya registrado');
           } else if (rows[0].telefono === req.body.telefono) {
-            console.log('telefono', rows[0].telefono, 'ya registrado');
+            res.json('Telefono ya registrado');
           } else if (rows[0].usuario === req.body.usuario) {
-            console.log('usuario', rows[0].usuario, 'ya esta registrado');
+            res.json('Usuario ya registrado');
           }
         }
       } else {
@@ -112,20 +112,18 @@ export const singinUser = async (req, res) => {
     if (rows.length !== 0) {
       bcryptjs.compare(req.body.pass, rows[0].pass, (errpass, respass) => {
         if (errpass) {
-          console.log(err);
+          res.json(err, fields);
         }
         if (respass) {
-          console.log('password correcto');
           const data = JSON.stringify(rows[0]);
           const token = jwt.sign(data, config.llave);
-          console.log('AUTENTICACIÓN EXITOSA!', token);
           res.json({ token });
         } else {
-          console.log('password incorrecto');
+          res.status(401).json('Contraseña incorrecta');
         }
       });
     } else {
-      console.log('usuario incorrecto');
+      res.status(401).json('Usuario incorrecto');
     }
   });
 };
@@ -136,7 +134,6 @@ export const testToken = async (req, res) => {
   if (token !== '') {
     const content = jwt.verify(token, config.llave);
     req.data = content;
-    res.json('Información secreta');
   } else {
     res.status(401).json('token vacio');
   }

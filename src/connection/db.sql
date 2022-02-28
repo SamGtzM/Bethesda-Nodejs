@@ -44,7 +44,6 @@ CREATE TABLE tabla_almacen (
     costo_unitario varchar(255),
     fecha_ultima_salida DATETIME,
     usuario_alta varchar(255),
-    nombre_producto VARCHAR(255),
     FOREIGN KEY (id_producto) REFERENCES tabla_productos (id_producto)
 ); 
 

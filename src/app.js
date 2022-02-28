@@ -17,12 +17,14 @@ const clientsRoute = require('./routes/clientes.routes');
 const almacenRoute = require('./routes/almacen.routes');
 const gasolinaRoute = require('./routes/gasolina.routes');
 const ventasRoute = require('./routes/ventas.routes');
+const productosRoute = require('./routes/productos.routes');
 
 app.use('/user', userRoute);
 app.use('/auth', authRoute);
 app.use('/clientes', clientsRoute);
+app.use('/productos', productosRoute);
 app.use('/almacen', almacenRoute);
-app.use('/gasolina', gasolinaRoute);
 app.use('/ventas', ventasRoute);
+app.use('/gasolina', gasolinaRoute);
 
 module.exports = app;
