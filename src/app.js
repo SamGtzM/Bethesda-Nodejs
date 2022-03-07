@@ -18,6 +18,8 @@ const almacenRoute = require('./routes/almacen.routes');
 const gasolinaRoute = require('./routes/gasolina.routes');
 const ventasRoute = require('./routes/ventas.routes');
 const productosRoute = require('./routes/productos.routes');
+const mantenimientoRoute = require('./routes/mantenimiento.routes');
+const entregasRoute = require('./routes/entregas.routes');
 
 app.use('/user', userRoute);
 app.use('/auth', authRoute);
@@ -26,5 +28,7 @@ app.use('/productos', productosRoute);
 app.use('/almacen', almacenRoute);
 app.use('/ventas', ventasRoute);
 app.use('/gasolina', gasolinaRoute);
+app.use('/mantenimiento', mantenimientoRoute);
+app.use('/entregas', entregasRoute);
 
 module.exports = app;

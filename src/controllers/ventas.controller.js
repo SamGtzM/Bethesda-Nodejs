@@ -20,7 +20,7 @@ export const createVenta = async (req, res) => {
 };
 
 export const getVentas = async (req, res) => {
-  await db.query('SELECT * FROM tabla_ventas ORDER BY id_venta DESC', (err, rows, fields) => {
+  await db.query('SELECT * FROM tabla_ventas INNER JOIN tabla_usuario ON tabla_ventas.id_usuario = tabla_usuario.id_usuario  INNER JOIN tabla_clientes ON tabla_ventas.id_cliente = tabla_clientes.id_cliente  INNER JOIN tabla_productos ON tabla_ventas.id_producto = tabla_productos.id_producto ORDER BY id_venta DESC;', (err, rows, fields) => {
     if (!err) {
       res.status(200).json(rows);
     } else {

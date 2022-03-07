@@ -41,7 +41,7 @@ CREATE TABLE tabla_almacen (
     id_producto INT NOT NULL,
     numero_activos varchar(255),
     fecha_entrada TIMESTAMP NOT NULL DEFAULT current_timestamp,
-    costo_unitario varchar(255),
+    costo_unitario DOUBLE,
     fecha_ultima_salida DATETIME,
     usuario_alta varchar(255),
     FOREIGN KEY (id_producto) REFERENCES tabla_productos (id_producto)
@@ -68,4 +68,26 @@ CREATE TABLE tabla_control_gasolina(
     fecha_alta TIMESTAMP NOT NULL DEFAULT current_timestamp,
     fecha_carga DATETIME,
     FOREIGN KEY (id_usuario) REFERENCES tabla_usuario (id_usuario)
+);
+
+CREATE TABLE tabla_mantenimiento(
+    id_mantenimiento INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id_producto INT NOT NULL,
+    fecha_mtto_desde TIMESTAMP NOT NULL DEFAULT current_timestamp,
+    fecha_mtto_hasta DATETIME,
+    FOREIGN KEY (id_producto) REFERENCES tabla_productos (id_producto)
+);
+
+CREATE TABLE tabla_entregas(
+    id_entrega INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id_usuario INT NOT NULL,
+    id_producto INT NOT NULL,
+    id_cliente INT NOT NULL,
+    fecha_alta TIMESTAMP NOT NULL DEFAULT current_timestamp,
+    cantidad VARCHAR(255),
+    precio DOUBLE,
+    entregado INT,
+    FOREIGN KEY (id_usuario) REFERENCES tabla_usuario (id_usuario),
+    FOREIGN KEY (id_producto) REFERENCES tabla_productos (id_producto),
+    FOREIGN KEY (id_cliente) REFERENCES tabla_clientes (id_cliente)
 );

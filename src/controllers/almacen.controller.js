@@ -19,7 +19,7 @@ export const createAlmacen = async (req, res) => {
 };
 
 export const getAlmacen = async (req, res) => {
-  await db.query('SELECT * FROM tabla_almacen ORDER BY id_almacen DESC', (err, rows, fields) => {
+  await db.query('SELECT * FROM tabla_almacen INNER JOIN tabla_productos ON tabla_almacen.id_producto = tabla_productos.id_producto ORDER BY id_almacen DESC;', (err, rows, fields) => {
     if (!err) {
       res.status(200).json(rows);
     } else {
